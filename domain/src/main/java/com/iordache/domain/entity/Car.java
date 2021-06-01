@@ -33,7 +33,7 @@ public class Car {
     @Enumerated(EnumType.STRING)
     private EngineType engineType;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Engine engine;
 
 
