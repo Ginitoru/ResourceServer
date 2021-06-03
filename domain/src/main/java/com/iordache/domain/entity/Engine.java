@@ -1,7 +1,16 @@
 package com.iordache.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "engines")
 public class Engine {
@@ -17,6 +26,7 @@ public class Engine {
     private double torque;
     private double cylindricalCapacity;
 
+    @JsonBackReference  //ca sa rezolv problema de bidirectionalitate cu JSON -> aceasta adnotare face sa nu mai fie transformat obiectul in JSON ce ar duce la exceptia de stackOverflow
     @OneToOne(mappedBy = "engine")
     private Car car;
 

@@ -1,4 +1,4 @@
-package com.iordache.persistence.services;
+package com.iordache.persistence.repositories;
 
 import com.iordache.domain.entity.Car;
 import com.iordache.domain.entity.Engine;
@@ -6,18 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface CarService {
-
-
-    @Transactional
+public interface CarRepository {
     void createCar(Car car);
 
-    @Transactional(readOnly = true)
     List<Car> findCarsByModel(String model);
 
-    @Transactional
+
     int deleteCar(int id);
 
-    @Transactional
-    int updateEngineSpecs(Engine engine, int id);
+    int updateEngineSpecs(Engine eungine, int id);
 }

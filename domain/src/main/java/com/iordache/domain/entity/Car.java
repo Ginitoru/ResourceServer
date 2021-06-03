@@ -1,6 +1,7 @@
 package com.iordache.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iordache.domain.util.EngineType;
 import com.iordache.domain.util.GearBox;
 import lombok.Getter;
@@ -33,6 +34,7 @@ public class Car {
     @Enumerated(EnumType.STRING)
     private EngineType engineType;
 
+    @JsonManagedReference  //ca sa rezolv problema de bidirectionalitate cu JSON -> aceasta adnotare face sa fie transformat obiectul in JSON
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Engine engine;
 

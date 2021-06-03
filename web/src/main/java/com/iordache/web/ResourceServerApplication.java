@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@ComponentScan({"com.iordache.web.*"})
+@ComponentScan({"com.iordache.web.*", "com.iordache.persistence.*"})
 @Import({ResourceServerConfiguration.class})
 @EntityScan({"com.iordache.domain.entity"})
 public class ResourceServerApplication {
