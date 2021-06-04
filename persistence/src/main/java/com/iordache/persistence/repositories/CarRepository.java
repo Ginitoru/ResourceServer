@@ -5,6 +5,7 @@ import com.iordache.domain.entity.Engine;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CarRepository {
     void createCar(Car car);
@@ -14,5 +15,7 @@ public interface CarRepository {
 
     int deleteCar(int id);
 
-    int updateEngineSpecs(Engine eungine, int id);
+    Car updateEngineSpecsOfTheCar(Car car);
+
+    Optional<Car> findCarById(int id);
 }

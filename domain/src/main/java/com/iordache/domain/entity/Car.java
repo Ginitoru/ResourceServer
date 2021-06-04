@@ -35,14 +35,19 @@ public class Car {
     private EngineType engineType;
 
     @JsonManagedReference  //ca sa rezolv problema de bidirectionalitate cu JSON -> aceasta adnotare face sa fie transformat obiectul in JSON
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
     private Engine engine;
 
-
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", doors=" + doors +
+                ", gearBox=" + gearBox +
+                ", engineType=" + engineType +
+                ", engine=" + engine +
+                '}';
+    }
 }

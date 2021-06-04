@@ -30,4 +30,15 @@ public class Engine {
     @OneToOne(mappedBy = "engine")
     private Car car;
 
+    @Override
+    public String toString() {
+        return "Engine{" +
+                "id=" + id +
+                ", engineName='" + engineName + '\'' +
+                ", cylinders=" + cylinders +
+                ", horsePower=" + horsePower +
+                ", torque=" + torque +
+                ", cylindricalCapacity=" + cylindricalCapacity +
+                '}';
+    }
 }

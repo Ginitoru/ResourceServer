@@ -19,5 +19,5 @@ public interface CarService {
     int deleteCar(int id);
 
     @Transactional
-    int updateEngineSpecs(Engine engine, int id);
+    Car updateEngineSpecsOfTheCar(Engine engine, int id);
 }

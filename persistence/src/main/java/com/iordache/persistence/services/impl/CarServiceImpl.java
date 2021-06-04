@@ -5,9 +5,11 @@ import com.iordache.domain.entity.Engine;
 import com.iordache.persistence.repositories.impl.CarRepositoryImpl;
 import com.iordache.persistence.services.CarService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.LockModeType;
 import java.util.List;
 
 
@@ -41,8 +43,19 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public int updateEngineSpecs(Engine engine, int id){
-        return carRepository.updateEngineSpecs(engine, id);
+    @Lock(LockModeType.OPTIMISTIC)
+    public Car updateEngineSpecsOfTheCar(Engine engine, int carId){
+
+        Car car = carRepository.findCarById(carId)
+                              .orElseThrow(() -> new RuntimeException("Car not found by id"));
+
+        int engineId = car.getEngine().getId();
+
+        engine.setId(engineId);
+
+        car.setEngine(engine);
+
+        return carRepository.updateEngineSpecsOfTheCar(car);
     }
 
 

@@ -46,13 +46,20 @@ public class CarRepositoryImpl implements CarRepository {
     }
 
     @Override
-    public int updateEngineSpecs(Engine engine, int id){
-        String jpql = "UPDATE Car c SET c.engine =: engine WHERE c.id=: id";
+    public Car updateEngineSpecsOfTheCar(Car car){
+       return entityManager.merge(car);
 
-        return entityManager.createQuery(jpql)
-                            .setParameter("engine", engine)
-                            .setParameter("id", id)
-                            .executeUpdate();
+    }
+
+
+    @Override
+    public Optional<Car> findCarById(int id){
+        String jpql = "SELECT c FROM Car c WHERE c.id =: id";
+
+        return entityManager.createQuery(jpql, Car.class)
+                             .setParameter("id", id)
+                             .getResultStream()
+                             .findFirst();
     }
 
 
