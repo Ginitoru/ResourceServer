@@ -16,7 +16,7 @@ public interface CarService {
     List<Car> findCarsByModel(String model);
 
     @Transactional
-    int deleteCar(int id);
+    int deleteCarById(int id);
 
     @Transactional
     Car updateEngineSpecsOfTheCar(Engine engine, int id);

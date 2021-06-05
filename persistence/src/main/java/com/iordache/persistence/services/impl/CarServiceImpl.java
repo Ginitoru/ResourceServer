@@ -8,6 +8,7 @@ import com.iordache.persistence.repositories.impl.CarRepositoryImpl;
 import com.iordache.persistence.services.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,48 +26,53 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional  //method 2
+    @PreAuthorize("hasRole('ADMIN')")
     public void createCar(Car car){
 
        carRepository.findCarsByModel(car.getModel())
                                         .stream()
-                                        .filter(c -> c.equals(car))
+                                        .filter(theCar -> theCar.equals(car))
                                         .findFirst()
-                                        .ifPresentOrElse(x -> throwException(),
+                                        .ifPresentOrElse(theCar -> throwsException(),
                                                         () ->carRepository.createCar(car));
     }
 
     //method 1
-    private void throwException(){
+    private void throwsException(){
         throw new CarAlreadyExists("The car already exists in the database");
     }
 
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAnyRole('{ADMIN, USER}')")
     public List<Car> findCarsByModel(String model){
         return carRepository.findCarsByModel(model);
     }
 
+
     @Override
     @Transactional
-    public int deleteCar(int id){
-        return carRepository.deleteCar(id);
+    @PreAuthorize("hasRole('ADMIN')")
+    public int deleteCarById(int carId){
+        return carRepository.deleteCarById(carId);
     }
 
 
     @Override
     @Transactional
     @Lock(LockModeType.OPTIMISTIC) //method 2
+    @PreAuthorize("hasRole('ADMIN')")
     public Car updateEngineSpecsOfTheCar(Engine engine, int carId){
 
         return carRepository.findCarById(carId)
-                            .map(c -> update(c, engine))
+                            .map(car -> updateEngine(car, engine))
                             .orElseThrow(() -> new CarNotFoundException("Car not found by id"));
 
     }
-        
+
     //method 1
-    private Car update(Car car, Engine engine){
+    private Car updateEngine(Car car, Engine engine){
 
         int engineId = car.getEngine().getId();
         engine.setId(engineId);
@@ -74,12 +80,4 @@ public class CarServiceImpl implements CarService {
 
         return carRepository.updateEngineSpecsOfTheCar(car);
     }
-
-
-
-
-
-
-
-
 }

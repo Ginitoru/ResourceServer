@@ -29,7 +29,7 @@ public class CarController {
 
     @DeleteMapping("/car/{carId}")
     public int deleteCar(@PathVariable int carId){
-        return carService.deleteCar(carId);
+        return carService.deleteCarById(carId);
     }
 
 

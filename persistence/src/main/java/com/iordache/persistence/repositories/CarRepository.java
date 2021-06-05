@@ -12,8 +12,7 @@ public interface CarRepository {
 
     List<Car> findCarsByModel(String model);
 
-
-    int deleteCar(int id);
+    int deleteCarById(int id);
 
     Car updateEngineSpecsOfTheCar(Car car);
 

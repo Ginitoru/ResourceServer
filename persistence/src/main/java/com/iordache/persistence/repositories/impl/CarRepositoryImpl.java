@@ -1,7 +1,6 @@
 package com.iordache.persistence.repositories.impl;
 
 import com.iordache.domain.entity.Car;
-import com.iordache.domain.entity.Engine;
 import com.iordache.persistence.repositories.CarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -26,6 +25,7 @@ public class CarRepositoryImpl implements CarRepository {
         entityManager.persist(car);
     }
 
+
     @Override
     public List<Car> findCarsByModel(String model){
         String jpql = "SELECT c FROM Car c WHERE c.model =: model";
@@ -37,7 +37,7 @@ public class CarRepositoryImpl implements CarRepository {
 
 
     @Override
-    public int deleteCar(int id){
+    public int deleteCarById(int id){
         String jpql ="DELETE FROM Car c WHERE c.id =: id";
 
         return entityManager.createQuery(jpql)
@@ -45,10 +45,10 @@ public class CarRepositoryImpl implements CarRepository {
                             .executeUpdate();
     }
 
+
     @Override
     public Car updateEngineSpecsOfTheCar(Car car){
        return entityManager.merge(car);
-
     }
 
 
@@ -61,10 +61,4 @@ public class CarRepositoryImpl implements CarRepository {
                              .getResultStream()
                              .findFirst();
     }
-
-
-
-
-
-
 }

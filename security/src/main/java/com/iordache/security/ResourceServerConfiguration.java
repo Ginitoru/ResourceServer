@@ -3,14 +3,12 @@ package com.iordache.security;
 
 
 import com.nimbusds.jose.shaded.json.JSONArray;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -56,7 +54,7 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter {
         String key = "sdfasdfasfasdfadsfasdfasdfadsfasdfasdfasdfasdfasdf"; //cheia trebuie sa aiba o anumita lungime -> incazul de fata am folosit simetric key
         SecretKey secretKey = new SecretKeySpec(key.getBytes(),0 ,key.getBytes().length, "AES");
         return NimbusJwtDecoder.withSecretKey(secretKey)  //daca vresa sa folosim asimetric key o sa folosim metoda withPublicKey()
-                .build();
+                               .build();
     }
 
 
