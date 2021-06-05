@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @NoArgsConstructor
@@ -40,5 +41,18 @@ public class Engine {
                 ", torque=" + torque +
                 ", cylindricalCapacity=" + cylindricalCapacity +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Engine engine = (Engine) o;
+        return cylinders == engine.cylinders && Double.compare(engine.horsePower, horsePower) == 0 && Double.compare(engine.torque, torque) == 0 && Double.compare(engine.cylindricalCapacity, cylindricalCapacity) == 0 && Objects.equals(engineName, engine.engineName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(engineName, cylinders, horsePower, torque, cylindricalCapacity);
     }
 }

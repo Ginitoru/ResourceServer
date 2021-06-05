@@ -29,7 +29,10 @@ public class CarServiceImpl implements CarService {
 
         boolean carAlreadyExists = carRepository.findCarsByModel(car.getModel())
                                         .stream()
+                                        .filter(c -> c.equals(car))
                                         .anyMatch(anyCar -> anyCar.equals(car));
+
+        System.out.println(carAlreadyExists + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 
         if(carAlreadyExists){
             throw new CarAlreadyExists("The car already exists in the database");
