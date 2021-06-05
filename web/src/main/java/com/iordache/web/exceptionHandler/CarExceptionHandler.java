@@ -11,41 +11,35 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class CarExceptionHandler {
 
-    @ExceptionHandler
-    public ResponseEntity<CarErrorResponse> handleException(CarNotFoundException e){
-        CarErrorResponse error = new CarErrorResponse();
+    @ExceptionHandler //method 2
+    public ResponseEntity<CarErrorResponse> handleException(CarNotFoundException exc){
 
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setMessage(e.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-        e.printStackTrace();
-
+        var error = carErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), exc);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<CarErrorResponse> allExceptions(NumberFormatException e){
-        CarErrorResponse error = new CarErrorResponse();
+    @ExceptionHandler //method 2
+    public ResponseEntity<CarErrorResponse> allExceptions(NumberFormatException exc){
 
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setMessage("NumberFormatException " + e.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-        e.printStackTrace();
+        var message ="NumberFormatException " + exc.getMessage();
+        var error = carErrorResponse(HttpStatus.BAD_REQUEST.value(), message, exc);
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 
-    @ExceptionHandler
-    public ResponseEntity<CarErrorResponse> handleCarAlreadyExistsException(CarAlreadyExists e){
-        CarErrorResponse error = new CarErrorResponse();
+    @ExceptionHandler //method 2
+    public ResponseEntity<CarErrorResponse> handleCarAlreadyExistsException(CarAlreadyExists exc){
 
-        error.setStatus(HttpStatus.FOUND.value());
-        error.setMessage(e.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-        e.printStackTrace();
-
+        var error = carErrorResponse(HttpStatus.FOUND.value(), exc.getMessage(), exc);
         return new ResponseEntity<>(error, HttpStatus.FOUND);
+    }
+
+    //method 1
+    private CarErrorResponse carErrorResponse(int status, String message, RuntimeException exception){
+
+        exception.printStackTrace();
+        return new CarErrorResponse(status, message, System.currentTimeMillis());
     }
 
 }
