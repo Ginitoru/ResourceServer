@@ -8,6 +8,7 @@
         <module>security</module>
         <module>domain</module>
         <module>persistence</module>
+        <module>exception</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

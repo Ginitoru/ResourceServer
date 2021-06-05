@@ -19,6 +19,12 @@
         </dependency>
         <dependency>
             <groupId>com.iordache</groupId>
+            <artifactId>exception</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.iordache</groupId>
             <artifactId>domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>

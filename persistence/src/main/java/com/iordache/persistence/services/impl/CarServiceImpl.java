@@ -2,6 +2,8 @@ package com.iordache.persistence.services.impl;
 
 import com.iordache.domain.entity.Car;
 import com.iordache.domain.entity.Engine;
+import com.iordache.exception.error.CarAlreadyExists;
+import com.iordache.exception.error.CarNotFoundException;
 import com.iordache.persistence.repositories.impl.CarRepositoryImpl;
 import com.iordache.persistence.services.CarService;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,15 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional
     public void createCar(Car car){
+
+        boolean carAlreadyExists = carRepository.findCarsByModel(car.getModel())
+                                        .stream()
+                                        .anyMatch(anyCar -> anyCar.equals(car));
+
+        if(carAlreadyExists){
+            throw new CarAlreadyExists("The car already exists in the database");
+        }
+
         carRepository.createCar(car);
     }
 
@@ -47,7 +58,7 @@ public class CarServiceImpl implements CarService {
     public Car updateEngineSpecsOfTheCar(Engine engine, int carId){
 
         Car car = carRepository.findCarById(carId)
-                              .orElseThrow(() -> new RuntimeException("Car not found by id"));
+                              .orElseThrow(() -> new CarNotFoundException("Car not found by id"));
 
         int engineId = car.getEngine().getId();
 

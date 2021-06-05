@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @NoArgsConstructor
 @Getter
@@ -37,6 +38,20 @@ public class Car {
     @JsonManagedReference  //ca sa rezolv problema de bidirectionalitate cu JSON -> aceasta adnotare face sa fie transformat obiectul in JSON
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
     private Engine engine;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return doors == car.doors && Objects.equals(brand, car.brand) && Objects.equals(model, car.model) && gearBox == car.gearBox && engineType == car.engineType && Objects.equals(engine, car.engine);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, model, doors, gearBox, engineType, engine);
+    }
 
     @Override
     public String toString() {
