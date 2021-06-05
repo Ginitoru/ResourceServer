@@ -56,21 +56,24 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    @Lock(LockModeType.OPTIMISTIC)
+    @Lock(LockModeType.OPTIMISTIC) //method 2
     public Car updateEngineSpecsOfTheCar(Engine engine, int carId){
 
-        Car car = carRepository.findCarById(carId)
-                              .orElseThrow(() -> new CarNotFoundException("Car not found by id"));
+        return carRepository.findCarById(carId)
+                            .map(c -> update(c, engine))
+                            .orElseThrow(() -> new CarNotFoundException("Car not found by id"));
+
+    }
+        
+    //method 1
+    private Car update(Car car, Engine engine){
 
         int engineId = car.getEngine().getId();
-
         engine.setId(engineId);
-
         car.setEngine(engine);
 
         return carRepository.updateEngineSpecsOfTheCar(car);
     }
-
 
 
 
