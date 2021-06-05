@@ -24,21 +24,20 @@ public class CarServiceImpl implements CarService {
 
 
     @Override
-    @Transactional
+    @Transactional  //method 2
     public void createCar(Car car){
 
-        boolean carAlreadyExists = carRepository.findCarsByModel(car.getModel())
+       carRepository.findCarsByModel(car.getModel())
                                         .stream()
                                         .filter(c -> c.equals(car))
-                                        .anyMatch(anyCar -> anyCar.equals(car));
+                                        .findFirst()
+                                        .ifPresentOrElse(x -> throwException(),
+                                                        () ->carRepository.createCar(car));
+    }
 
-        System.out.println(carAlreadyExists + "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-
-        if(carAlreadyExists){
-            throw new CarAlreadyExists("The car already exists in the database");
-        }
-
-        carRepository.createCar(car);
+    //method 1
+    private void throwException(){
+        throw new CarAlreadyExists("The car already exists in the database");
     }
 
 
