@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CarExceptionHandler {
 
     @ExceptionHandler //method 2
-    public ResponseEntity<CarErrorResponse> handleException(CarNotFoundException exc){
+    public ResponseEntity<CarErrorResponse> handleCarNotFoundException(CarNotFoundException exc){
 
         var error = carErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), exc);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler //method 2
-    public ResponseEntity<CarErrorResponse> allExceptions(NumberFormatException exc){
+    public ResponseEntity<CarErrorResponse> allNumberFormatException(NumberFormatException exc){
 
         var message ="NumberFormatException " + exc.getMessage();
         var error = carErrorResponse(HttpStatus.BAD_REQUEST.value(), message, exc);
