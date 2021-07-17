@@ -3,7 +3,7 @@ https://github.com/Ginitoru/AuthorizationServer.git
 
 1. Framework used: Spring with SpringBoot 2.5.0.
 
-2. Dependecies: Spring JPA, Spring web, Spring security, mysql driver, lombok.
+2. Dependecies: Spring Data JPA, Spring web, Spring security, mysql driver, lombok.
 
 3. Functionality:
 
